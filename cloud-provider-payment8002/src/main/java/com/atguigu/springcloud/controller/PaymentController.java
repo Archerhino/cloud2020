@@ -50,7 +50,7 @@ public class PaymentController {
     @GetMapping(value = "/payment/discovery")
     public Object discovery(){
         List<String> services = discoveryClient.getServices();
-        for (String service : services){
+        for (String service : services) {
             log.info("**********Service: {}", service);
         }
 
