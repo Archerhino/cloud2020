@@ -37,7 +37,7 @@ public class PaymentController {
     }
 
     @GetMapping(value = "/payment/{id}")
-    public CommonResult<Payment> getPaymentById(@PathVariable Long id){
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id){
         Payment payment = paymentService.getPaymentById(id);
         if(payment != null){
             log.info("The serial is: {}", payment.getSerial());
