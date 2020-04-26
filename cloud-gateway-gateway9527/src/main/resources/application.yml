@@ -1,0 +1,36 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      enabled: true #open dynamic routing using lb://${the provider application name}
+      routes:
+      - id: payment_route
+        uri: lb://cloud-payment-service
+        predicates:
+          - Path=/payment/**
+#          - After=2020-04-25T20:03:15.390-05:00[America/Chicago]
+#          - Before=2020-04-25T20:03:15.390-05:00[America/Chicago]
+#          - Cookie=username, \d+
+            # header shall include X-Request-Id attribute and match the pattern
+#          - Header=X-Request-Id, abc\d+
+#          - Host=localhost:**
+#          - Method=POST
+#          - Query=username, \d+
+        filters:
+        - AddResponseHeader=X-Response-Red, Blue
+
+      - id: payment_route2
+        uri: https://news.google.com/topstories?hl=en-US&gl=US&ceid=US:en
+        predicates:
+        - Path=/google
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka, http://eureka7003.com:7003/eureka
+  instance:
+    hostname: cloud-gateway-service
